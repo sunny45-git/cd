@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int first[3][2] = {0};
+    int i, changed;
+
+    // FIRST(F) = {(, id}
+    first[2][0] = 1;
+    first[2][1] = 1;
+
+    // Propagate FIRST sets using T -> F and E -> T
+    do {
+        changed = 0;
+
+        for(i = 0; i < 2; i++) {
+            if(first[1][i] != first[2][i]) {
+                first[1][i] = first[2][i];
+                changed = 1;
+            }
+
+            if(first[0][i] != first[1][i]) {
+                first[0][i] = first[1][i];
+                changed = 1;
+            }
+        }
+    } while(changed);
+
+    printf("FIRST(E) = { ");
+    for(i = 0; i < 2; i++)
+        if(first[0][i])
+            printf("%s ", i == 0 ? "(" : "id");
+
+    printf("}\n");
+
+    printf("FIRST(T) = { ( id }\n");
+    printf("FIRST(F) = { ( id }\n");
+
+    return 0;
+}
